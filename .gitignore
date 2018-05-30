@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__
+myvenv/
+plsa.py
+result/
+data/doc_short.csv
+data/doc_word_matrix_150.npy
+data/topic_word_prob.npy
+data/doc_dict.json
+data/doc_topic_prob.npy
+data/doc_dict_short.json
+data/doc_word_matrix.npy
+data/doc.csv
+data/*
+!data/stopwords_long.txt
+
