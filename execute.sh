@@ -1,5 +1,7 @@
 #!/bin/bash
 use_dic=0
+curl -L -o data/doc.csv https://www.dropbox.com/s/qdntpy7d0p20khd/doc.csv?dl=1
+curl -L -o data/group.csv https://www.dropbox.com/s/2dlc8j0qzfwltuz/groups.csv?dl=1
 while getopts ":ebd:g:o:" opt; do
 	case $opt in
 		e)
