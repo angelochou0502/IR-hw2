@@ -4,7 +4,7 @@ while getopts ":ebd:g:o:" opt; do
 	case $opt in
 		e)
 			use_dic=1
-			#echo "-e was triggered , $use_dic"
+			echo "-e was triggered , $use_dic"
 		;;
 		b)
 			#echo "-b was triggered"

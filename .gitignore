@@ -13,4 +13,7 @@ data/doc_word_matrix.npy
 data/doc.csv
 data/*
 !data/stopwords_long.txt
-
+!data/good_dictionary.csv
+create_dic.py
+b03902016/
+report.pages

@@ -5,5 +5,9 @@ This is a project to implement PLSA(Probabilistic Latent Semantic Analysis) thro
 ## Run the test
 
 ```
-sh execute.sh -d data/doc.csv -g data/group.csv -o result.csv
+sh execute.sh [-e] -d data/doc.csv -g data/group.csv -o result.csv
+
+options:	
+	-e
+		If specified, use the dictionary I made to classify the document
 ```

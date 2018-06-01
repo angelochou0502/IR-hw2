@@ -5,6 +5,7 @@ import json
 import csv
 import re
 import string
+csv.field_size_limit(sys.maxsize)
 
 #get stopword list
 stopwords = []
@@ -52,7 +53,7 @@ class Group():
 		'''
 		my_dict = read_csv(dictionary_path , value_index = 1)
 		for class_word in self.group_dict.values():
-			for dic_list in my_dict.values():
+			for i , dic_list in enumerate(my_dict.values()):
 				if(class_word[0] in dic_list):
 					class_word += dic_list
 	#after creating doc_topic_prob and topic_word_prob
@@ -85,6 +86,7 @@ class Group():
 		#write answer
 		write_csv(answer , out_file)
 
+
 class Document():
 	def __init__(self , doc_path):
 		self.doc_path = doc_path
@@ -99,9 +101,9 @@ class Document():
 				self.doc_dict = json.load(f)
 		else:
 			print('creating document dictionary...')
-			self.doc_dict = read_csv(self.doc_dict , value_index = 1)
+			self.doc_dict = read_csv(self.doc_path , value_index = 1)
 			with open('./data/doc_dict.json' , 'w') as f:
-				json.dump(doc_dict , f)
+				json.dump(self.doc_dict , f)
 	def get_vocabulary(self, min_count):
 		#get the total word list and only care for word count > 200
 		total_list = []
@@ -164,10 +166,25 @@ class Document():
 				self.topic_word_prob[t] = np.einsum('ij , ij->i' , doc_word_matrix.transpose() , topic_prob[:,:,t].transpose())
 				if(np.sum(self.topic_word_prob[t]) > 0):
 					self.topic_word_prob[t] = self.topic_word_prob[t] / np.sum(self.topic_word_prob[t])
-			print("log likelihood: %f" %(log_likelihood(doc_word_matrix , self.topic_word_prob , self.doc_topic_prob)))
+			#print("log likelihood: %f" %(log_likelihood(doc_word_matrix , self.topic_word_prob , self.doc_topic_prob)))
 
 		np.save('./data/topic_word_prob.npy' , self.topic_word_prob)
 		np.save('./data/doc_topic_prob.npy' , self.doc_topic_prob)
+
+	#create dic at ./data/topic_word_prob.npy
+	def create_dic(self , number_of_topic):
+		print('create dic')
+		topic_word_prob = np.load('./data/topic_word_prob.npy')
+		max_topic = np.argmax(topic_word_prob , 0)
+		word_dic = [[] for i in range(number_of_topic)]
+		for i , word in enumerate(self.vocabulary):
+			word_dic[max_topic[i]].append(word)
+		#write to my_dictinary.csv
+		with open('data/my_dictinary_2.csv' , 'w') as f:
+			s = csv.writer(f)
+			s.writerow(['topic_id' , 'words'])
+			for index , word_list in enumerate(word_dic):
+				s.writerow([index , word_list])
 
 
 
