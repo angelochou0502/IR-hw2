@@ -15,5 +15,5 @@ data/*
 !data/stopwords_long.txt
 !data/good_dictionary.csv
 create_dic.py
-b03902016/
+b03902016*
 report.pages
